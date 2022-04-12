@@ -22,8 +22,6 @@ cache:
 
 publish:
   extends: .docker-common
-  before_script:
-    - docker login
   variables:
     DOCKERFILE_CONTEXT: .
     IMAGE_NAME: cenk1cenk2/gitlab-tools
