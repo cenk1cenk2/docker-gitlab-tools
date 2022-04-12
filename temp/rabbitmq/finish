@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source /scripts/logger.sh
+
+log_interrupt "rabbitmq has crashed..." "both"
+
+s6-sleep 3

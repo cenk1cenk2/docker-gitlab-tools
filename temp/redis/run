@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source /scripts/logger.sh
+
+fdmove -c 2 1 "redis-server" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}redis${RESET}]\",\$0}'"

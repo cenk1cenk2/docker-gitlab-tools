@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+source /scripts/logger.sh
+
+log_start "Starting the webserver..."
+
+fdmove -c 2 1 /bin/bash -c "cd /opt/gitlab-tools && source venv/bin/activate && service" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}gitlab-tools-server${RESET}]\",\$0}'"

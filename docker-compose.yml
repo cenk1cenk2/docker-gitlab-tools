@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  gitlab-tools:
+    image: cenk1cenk2/gitlab-tools:latest
+    build:
+      context: .
+    restart: always
+    ports:
+      - 80:80
+    env_file:
+      - ./.env
+    depends_on:
+      - gitlab-tools-db
+
+  gitlab-tools-db:
+    image: postgres:13-alpine
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_DB: gitlab-tools
+      POSTGRES_USER: gitlab-tools
+      POSTGRES_PASSWORD: something

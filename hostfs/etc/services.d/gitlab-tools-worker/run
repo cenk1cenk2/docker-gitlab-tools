@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+source /scripts/logger.sh
+
+log_start "Starting the bgtask worker..."
+
+fdmove -c 2 1 /bin/bash -c "cd /opt/gitlab-tools && source venv/bin/activate && C_FORCE_ROOT=1 python manage.py celeryworker --config_prod" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}gitlab-tools-worker${RESET}]\",\$0}'"
