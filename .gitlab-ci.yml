@@ -1,11 +1,6 @@
 stages:
   - publish
 
-variables:
-  DOCKER_REGISTRY: ''
-  DOCKER_REGISTRY_USERNAME: '$DOCKER_REGISTRY_USERNAME'
-  DOCKER_REGISTRY_PASSWORD: '$DOCKER_REGISTRY_PASSWORD'
-
 cache:
   paths:
     - vendor/
@@ -16,7 +11,7 @@ cache:
   trigger:
     include:
       - project: devops/gitlab-pipes
-        file: /templates/docker-build.gitlab-ci.yml
+        file: /templates/docker-build-dockerhub.gitlab-ci.yml
         ref: main
     strategy: depend
 
