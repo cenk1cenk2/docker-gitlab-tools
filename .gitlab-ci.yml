@@ -1,0 +1,33 @@
+stages:
+  - publish
+
+variables:
+  PARENT_PIPELINE_ID: $CI_PIPELINE_ID
+  DOCKER_REGISTRY: ''
+  DOCKER_REGISTRY_USERNAME: ''
+  DOCKER_REGISTRY_PASSWORD: ''
+
+cache:
+  paths:
+    - vendor/
+  key: ${CI_COMMIT_REF_SLUG}
+
+.docker-common:
+  stage: publish
+  trigger:
+    include:
+      - project: devops/gitlab-pipes
+        file: /templates/docker-build.gitlab-ci.yml
+        ref: main
+    strategy: depend
+
+publish:
+  extends: .docker-common
+  variables:
+    DOCKERFILE_CONTEXT: .
+    IMAGE_NAME: cenk1cenk2/gitlab-tools
+    IMAGE_TAGS: latest
+  only:
+    refs:
+      - main
+      - tags
