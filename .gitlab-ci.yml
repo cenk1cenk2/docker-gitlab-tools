@@ -19,7 +19,7 @@ publish:
   extends: .docker-common
   variables:
     DOCKERFILE_CONTEXT: .
-    IMAGE_NAME: cenk1cenk2/gitlab-tools
+    DOCKER_IMAGE_NAME: cenk1cenk2/gitlab-tools
     IMAGE_TAGS: latest
   only:
     refs:
