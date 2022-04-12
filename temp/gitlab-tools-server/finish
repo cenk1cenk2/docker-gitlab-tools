@@ -1,7 +1,0 @@
-#!/bin/bash
-
-source /scripts/logger.sh
-
-log_interrupt "gitlab-tools-server has crashed..." "both"
-
-s6-sleep 3

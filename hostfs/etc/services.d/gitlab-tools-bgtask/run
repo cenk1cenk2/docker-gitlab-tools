@@ -4,7 +4,4 @@ source /scripts/logger.sh
 
 log_start "Starting the bgtask..."
 
-cd /opt/gitlab-tools
-source venv/bin/activate
-
 fdmove -c 2 1 /bin/bash -c "cd /opt/gitlab-tools && source venv/bin/activate && python manage.py celerybeat --config_prod --schedule=/data/celery_beat.db --pid=/tmp/celerybeat.pid" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}gitlab-tools-bgtask${RESET}]\",\$0}'"

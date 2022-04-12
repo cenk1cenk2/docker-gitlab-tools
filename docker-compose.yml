@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   gitlab-tools:
-    image: cenk1cenk2/gitlab-tools:latest
+    image: cenk1cenk2/gitlab-tools:test
     build:
       context: .
     restart: always

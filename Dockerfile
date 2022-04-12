@@ -35,7 +35,9 @@ RUN \
   source ./venv/bin/activate && \
   pip install --no-cache-dir --upgrade wheel setuptools && \
   pip install --no-cache-dir -r requirements.txt && \
-  pip install --no-cache-dir --upgrade psycopg2-binary GitPython==2.1.15 gitdb2==2.0.6 gitdb==0.6.4
+  pip install --no-cache-dir --upgrade psycopg2-binary GitPython==2.1.15 gitdb2==2.0.6 gitdb==0.6.4 && \
+  pip uninstall -y pycrypto && \
+  pip install --no-cache-dir --upgrade pycryptodome==3.14.1
 
 COPY ./hostfs /
 

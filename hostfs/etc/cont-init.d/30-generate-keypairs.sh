@@ -10,6 +10,7 @@ if [ ! -f /home/service/.ssh/id_rsa_1 ]; then
 	ssh-keygen -t rsa -b 4096 -C "$HOSTNAME" -f /home/service/.ssh/id_rsa_1
 
 	log_warn "This is a one time operation. Please mount a persistent volume to /home/service/ to keep this configuration!"
-fi
 
-chown service:service -R /home/service/.ssh/
+	chown service:service -R /home/service/.ssh/
+	chmod 600 /home/service/.ssh/*
+fi

@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-source /scripts/logger.sh
-
-fdmove -c 2 1 "rabbitmq-server" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}rabitmq${RESET}]\",\$0}'"
