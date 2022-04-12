@@ -55,9 +55,8 @@ RUN  \
 
 RUN useradd -ms /bin/bash -u 1500 service
 
-RUN mkdir -p /home/service/.ssh/ /conf && \
-  chown -R service:service /home/service && \
-  ln -s /home/service/.ssh /conf
+RUN mkdir -p /home/service/.ssh/ && \
+  chown -R service:service /home/service
 
 # s6 behaviour, https://github.com/just-containers/s6-overlay
 ENV S6_KEEP_ENV 1
