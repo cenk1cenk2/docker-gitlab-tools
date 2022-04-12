@@ -33,12 +33,9 @@ RUN \
 RUN \
   virtualenv -p python3 venv && \
   source ./venv/bin/activate && \
-  pip install --no-cache-dir --upgrade wheel && \
-  pip install --no-cache-dir --upgrade setuptools && \
-  pip install --no-cache-dir psycopg2-binary && \
+  pip install --no-cache-dir --upgrade wheel setuptools && \
   pip install --no-cache-dir -r requirements.txt && \
-  pip install --upgrade GitPython==2.1.15 && \
-  pip install --upgrade gitdb2==2.0.6 gitdb==0.6.4
+  pip install --no-cache-dir --upgrade psycopg2-binary GitPython==2.1.15 gitdb2==2.0.6 gitdb==0.6.4
 
 COPY ./hostfs /
 
@@ -58,8 +55,9 @@ RUN  \
 
 RUN useradd -ms /bin/bash -u 1500 service
 
-RUN mkdir -p /home/service/.ssh/ && \
-  chown -R service:service /home/service
+RUN mkdir -p /home/service/.ssh/ /conf && \
+  chown -R service:service /home/service && \
+  ln -s /home/service/.ssh /conf
 
 # s6 behaviour, https://github.com/just-containers/s6-overlay
 ENV S6_KEEP_ENV 1
