@@ -1,1 +1,2 @@
-/home/service true service 0766 0766
+/home/service true service 2664 2664
+/home/service/repositories true service 2664 2664
