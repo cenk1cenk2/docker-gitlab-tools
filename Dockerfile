@@ -53,12 +53,16 @@ RUN  \
   chmod +x /scripts/*.sh && \
   chmod +x /etc/cont-init.d/*.sh && \
   chmod +x /etc/services.d/gitlab-tools-bgtask/* && \
-  chmod +x /etc/services.d/gitlab-tools-worker/*
+  chmod +x /etc/services.d/gitlab-tools-worker/* && \
+  chmod +x /etc/services.d/uwsgi/*
 
-RUN useradd -ms /bin/bash -u 1500 service
+RUN useradd -ms /bin/bash -u 900 service
 
 RUN mkdir -p /home/service/.ssh/ && \
   chown -R service:service /home/service
+
+VOLUME [ "/home/service" ]
+EXPOSE 80
 
 # s6 behaviour, https://github.com/just-containers/s6-overlay
 ENV S6_KEEP_ENV 1

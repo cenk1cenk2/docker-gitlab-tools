@@ -4,4 +4,4 @@ source /scripts/logger.sh
 
 log_start "Starting uwsgi..."
 
-fdmove -c 2 1 /bin/bash -c "cd /opt/gitlab-tools && source venv/bin/activate && uwsgi -i '/etc/uwsgi/gitlab-tools.ini' --uid 1500 --thunder-lock" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}uwsgi${RESET}]\",\$0}'"
+fdmove -c 2 1 exec s6-setuidgid service /etc/services.d/uwsgi/service.sh | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}app${RESET}]\",\$0}'"

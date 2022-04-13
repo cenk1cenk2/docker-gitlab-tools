@@ -4,4 +4,4 @@ source /scripts/logger.sh
 
 log_start "Starting the celeryworker..."
 
-fdmove -c 2 1 runuser -l service -c "cd /opt/gitlab-tools && source venv/bin/activate && python manage.py celeryworker --config_prod" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}gitlab-tools-worker${RESET}]\",\$0}'"
+fdmove -c 2 1 exec s6-setuidgid service /etc/services.d/gitlab-tools-worker/service.sh | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}worker${RESET}]\",\$0}'"

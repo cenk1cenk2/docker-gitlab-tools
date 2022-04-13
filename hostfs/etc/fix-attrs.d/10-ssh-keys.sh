@@ -1,1 +1,1 @@
-/home/service/.ssh true service 0600 0600
+/home/service/.ssh true service:service 0600 2700
