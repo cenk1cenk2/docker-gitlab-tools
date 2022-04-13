@@ -2,6 +2,6 @@
 
 source /scripts/logger.sh
 
-log_start "Starting the bgtask worker..."
+log_start "Starting the celeryworker..."
 
-fdmove -c 2 1 /bin/bash -c "cd /opt/gitlab-tools && source venv/bin/activate && C_FORCE_ROOT=1 python manage.py celeryworker --config_prod" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}gitlab-tools-worker${RESET}]\",\$0}'"
+fdmove -c 2 1 runuser -l service -c "cd /opt/gitlab-tools && source venv/bin/activate && python manage.py celeryworker --config_prod" | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}gitlab-tools-worker${RESET}]\",\$0}'"

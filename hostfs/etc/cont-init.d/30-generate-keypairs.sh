@@ -12,5 +12,4 @@ if [ ! -f /home/service/.ssh/id_rsa_1 ]; then
 	log_warn "This is a one time operation. Please mount a persistent volume to /home/service/ to keep this configuration!"
 
 	chown service:service -R /home/service/.ssh/
-	chmod 600 /home/service/.ssh/*
 fi
