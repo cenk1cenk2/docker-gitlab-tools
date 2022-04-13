@@ -1,1 +1,1 @@
-/home/service true service 0760 0760
+/home/service true service 0600 0600
