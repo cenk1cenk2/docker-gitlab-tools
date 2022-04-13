@@ -1,11 +1,6 @@
 stages:
   - publish
 
-cache:
-  paths:
-    - vendor/
-  key: ${CI_COMMIT_REF_SLUG}
-
 .docker-common:
   stage: publish
   trigger:
