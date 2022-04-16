@@ -18,10 +18,8 @@ LOG_LEVEL=lifetime
 GT_GITLAB_APP_ID=
 GT_GITLAB_APP_SECRET=
 GT_GITLAB_URL=
-GT_HOST=0.0.0.0
-GT_PORT=8080
 GT_SERVER_NAME=
-SECRET_KEY=
+GT_SECRET_KEY=
 GT_DATABASE_URI=postgres://gitlab-tools:something@gitlab-tools-db/gitlab-tools
 EOF
 )
