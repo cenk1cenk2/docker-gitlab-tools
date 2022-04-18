@@ -21,13 +21,23 @@ RUN \
   curl -fsSL https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc | apt-key add - && \
   apt-get update && \
   apt-get install -y python3-virtualenv virtualenv rabbitmq-server redis-server build-essential python3-dev libpq-dev git postgresql-server-dev-all python3-pip libffi-dev nginx uwsgi uwsgi-plugin-python3 && \
+  curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
+  apt-get install -y nodejs
+
+RUN \
   # clone the dependencies
   mkdir -p /opt/gitlab-tools /etc/gitlab-tools /data && \
   git clone ${REPOSITORY} . && \
-  git checkout ${VERSION} && \
-  curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
-  apt-get install -y nodejs && \
-  cd /opt/gitlab-tools/gitlab_tools/static && npm ci && \
+  git checkout ${VERSION}
+
+WORKDIR /opt/gitlab-tools/gitlab_tools/static
+
+RUN \
+  npm ci
+
+WORKDIR /opt/gitlab-tools
+
+RUN \
   # clean up build time dependencies
   apt-get remove -y curl gnupg apt-transport-https nodejs
 
