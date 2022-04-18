@@ -1,5 +1,6 @@
 stages:
   - publish
+  - post
 
 .docker-common:
   stage: publish
@@ -9,6 +10,11 @@ stages:
         file: /templates/docker-build-dockerhub.gitlab-ci.yml
         ref: main
     strategy: depend
+
+include:
+  - project: devops/pipes
+    file: /templates/update-docker-hub-readme.gitlab-ci.yml
+    ref: main
 
 publish:
   extends: .docker-common
@@ -20,3 +26,10 @@ publish:
     refs:
       - main
       - tags
+
+update-docker-hub-readme:
+  variables:
+    README_REPOSITORY: cenk1cenk2/gitlab-tools
+    README_FILE: ./README.md
+    README_DESCRIPTION: |
+      Runs Salamek/gitlab-tools, a tool to enable pull/push mirroring to Gitlab from other Git sources in a container.
