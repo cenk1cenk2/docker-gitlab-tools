@@ -26,15 +26,15 @@ You can run this application as a `docker-compose` stack. The image is hosted as
 
 You can pass the [gitlab-tools](https://github.com/Salamek/gitlab-tools) configuration directly through environment variables without the need to run the CLI itself.
 
-| Variable             | Description                                                                                                                                      |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| LOG_LEVEL            | Sets the log level for the container. Can take values of "silent", "error", "warn", "lifetime", "info", "debug"                                  |
-| GT_GITLAB_APP_ID     | Your application id for your Gitlab instance.                                                                                                    |
-| GT_GITLAB_APP_SECRET | Your application secret for your Gitlab instance.                                                                                                |
-| GT_GITLAB_URL        | Your URL pointing to your Gitlab instance.                                                                                                       |
-| GT_SERVER_NAME       | Outward-facing URI of where this application will be hosted.                                                                                     |
-| GT_SECRET_KEY        | Secret key for session storage.                                                                                                                  |
-| GT_DATABASE_URI      | Full URL for SQLAlchemy to connect to the database. Should be in the format of: "postgres://gitlab-tools:something@gitlab-tools-db/gitlab-tools" |
+| Variable             | Description                                                                                                                                        |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LOG_LEVEL            | Sets the log level for the container. Can take values of "silent", "error", "warn", "lifetime", "info", "debug"                                    |
+| GT_GITLAB_APP_ID     | Your application id for your Gitlab instance.                                                                                                      |
+| GT_GITLAB_APP_SECRET | Your application secret for your Gitlab instance.                                                                                                  |
+| GT_GITLAB_URL        | Your URL pointing to your Gitlab instance.                                                                                                         |
+| GT_SERVER_NAME       | Outward-facing URI of where this application will be hosted.                                                                                       |
+| GT_SECRET_KEY        | Secret key for session storage.                                                                                                                    |
+| GT_DATABASE_URI      | Full URL for SQLAlchemy to connect to the database. Should be in the format of: "postgresql://gitlab-tools:something@gitlab-tools-db/gitlab-tools" |
 
 ### Persistent Storage
 

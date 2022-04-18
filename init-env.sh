@@ -20,7 +20,7 @@ GT_GITLAB_APP_SECRET=
 GT_GITLAB_URL=
 GT_SERVER_NAME=
 GT_SECRET_KEY=
-GT_DATABASE_URI=postgres://gitlab-tools:something@gitlab-tools-db/gitlab-tools
+GT_DATABASE_URI=postgresql://gitlab-tools:something@gitlab-tools-db/gitlab-tools
 EOF
 )
 

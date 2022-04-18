@@ -1,6 +1,7 @@
-FROM debian:stretch-slim
+FROM debian:bullseye-slim
 
-ARG VERSION=62f191746271dd6ec7e6247d2464d34d60877951
+ARG VERSION=3ac924c1c79aeace003623c1fdf96bceeed563ae
+ARG REPOSITORY=https://github.com/cenk1cenk2/gitlab-tools.git
 ARG S6_VERSION=2.2.0.3
 
 WORKDIR /opt/gitlab-tools
@@ -22,7 +23,7 @@ RUN \
   apt-get install -y python3-virtualenv virtualenv rabbitmq-server redis-server build-essential python3-dev libpq-dev git postgresql-server-dev-all python3-pip libffi-dev nginx uwsgi uwsgi-plugin-python3 && \
   # clone the dependencies
   mkdir -p /opt/gitlab-tools /etc/gitlab-tools /data && \
-  git clone https://github.com/Salamek/gitlab-tools.git . && \
+  git clone ${REPOSITORY} . && \
   git checkout ${VERSION} && \
   curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
   apt-get install -y nodejs && \
@@ -34,10 +35,7 @@ RUN \
   virtualenv -p python3 venv && \
   source ./venv/bin/activate && \
   pip install --no-cache-dir --upgrade wheel setuptools && \
-  pip install --no-cache-dir -r requirements.txt && \
-  pip install --no-cache-dir --upgrade psycopg2-binary GitPython==2.1.15 gitdb2==2.0.6 gitdb==0.6.4 && \
-  pip uninstall -y pycrypto && \
-  pip install --no-cache-dir --upgrade pycryptodome==3.14.1
+  pip install --no-cache-dir .
 
 COPY ./hostfs /
 
