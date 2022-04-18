@@ -1,7 +1,6 @@
 stages:
-  - publish
-  - post
   - docker
+  - post
 
 include:
   - project: devops/pipes
