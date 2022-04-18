@@ -4,11 +4,11 @@ stages:
 
 include:
   - project: devops/pipes
-    file: /templates/update-docker-hub-readme.gitlab-ci.yml
+    file: /templates/docker-build-dockerhub.gitlab-ci.yml
     ref: main
 
   - project: devops/pipes
-    file: /templates/docker-build-dockerhub.gitlab-ci.yml
+    file: /templates/update-docker-hub-readme.gitlab-ci.yml
     ref: main
 
 build-docker-image:
