@@ -1,7 +1,7 @@
 FROM debian:bullseye-slim
 
-ARG VERSION=3ac924c1c79aeace003623c1fdf96bceeed563ae
-ARG REPOSITORY=https://github.com/cenk1cenk2/gitlab-tools.git
+ARG VERSION=86eec339e09872bb50fb2c172537378e4c07987d
+ARG REPOSITORY=https://github.com/Salamek/gitlab-tools.git
 ARG S6_VERSION=2.2.0.3
 
 WORKDIR /opt/gitlab-tools
