@@ -8,8 +8,6 @@ This is the containerized version of the [gitlab-tools](https://github.com/Salam
 
 The container itself includes everything that is required to run the [gitlab-tools](https://github.com/Salamek/gitlab-tools) like the RabbitMQ and Redis instances, a UWSGI server to host the flask application, and an Nginx instance to stay in front of it. The only complementary container required to run the application is the database.
 
-Due to complications, this application runs on an old version of Debian and Python, but it should cause no problems since this application is designed with it.
-
 <!-- toc -->
 
 - [Setup](#setup)
