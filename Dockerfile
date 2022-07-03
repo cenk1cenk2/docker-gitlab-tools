@@ -22,22 +22,14 @@ RUN \
   apt-get update && \
   apt-get install -y python3-virtualenv virtualenv rabbitmq-server redis-server build-essential python3-dev libpq-dev git postgresql-server-dev-all python3-pip libffi-dev nginx uwsgi uwsgi-plugin-python3 && \
   curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
-  apt-get install -y nodejs
-
-RUN \
+  apt-get install -y nodejs && \
   # clone the dependencies
   mkdir -p /opt/gitlab-tools /etc/gitlab-tools /data && \
   git clone ${REPOSITORY} . && \
-  git checkout ${VERSION}
-
-WORKDIR /opt/gitlab-tools/gitlab_tools/static
-
-RUN \
-  npm ci
-
-WORKDIR /opt/gitlab-tools
-
-RUN \
+  git checkout ${VERSION} && \
+  cd /opt/gitlab-tools/gitlab_tools/static && \
+  npm ci && \
+  cd /opt/gitlab-tools && \
   # clean up build time dependencies
   apt-get remove -y curl gnupg apt-transport-https nodejs
 
