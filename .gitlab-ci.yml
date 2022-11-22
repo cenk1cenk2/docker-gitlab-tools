@@ -14,7 +14,7 @@ variables:
   README_DESCRIPTION: |
     Runs Salamek/gitlab-tools in a container, which enables pull/push mirroring to Gitlab.
   DOCKERFILE_CONTEXT: .
-  IMAGE_TAGS: latest
+  DOCKER_IMAGE_TAGS: latest
 
 build-docker-image:
   only:
