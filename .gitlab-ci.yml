@@ -16,7 +16,7 @@ variables:
   DOCKERFILE_CONTEXT: .
   DOCKER_IMAGE_TAGS: latest
 
-build-docker-image:
+docker-build:
   only:
     refs:
       - main
