@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim
 
-ARG VERSION=1.4.4
+ARG VERSION=1.4.6
 ARG REPOSITORY=https://github.com/Salamek/gitlab-tools.git
 ARG S6_VERSION=2.2.0.3
 
