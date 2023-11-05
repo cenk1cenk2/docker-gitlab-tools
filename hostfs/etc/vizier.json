@@ -1,0 +1,54 @@
+[
+  [
+    {
+      "name": "config",
+      "commands": ["/etc/cont-init.d/00-generate-configuration.sh"]
+    },
+    {
+      "name": "migrations",
+      "commands": ["/etc/cont-init.d/10-migrate-database.sh"]
+    },
+    {
+      "name": "permissions",
+      "commands": ["/etc/cont-init.d/20-fix-attrs.sh"]
+    }
+  ],
+  [
+    {
+      "name": "nginx",
+      "commands": ["service nginx start"]
+    }
+  ],
+  [
+    {
+      "name": "celerybeat",
+      "commands": ["/etc/services.d/gitlab-tools-bgtask/service.sh"],
+      "cwd": "/opt/gitlab-tools",
+      "run_as": {
+        "enable": true,
+        "uid": 900,
+        "gid": 900
+      }
+    },
+    {
+      "name": "celeryworker",
+      "commands": ["/etc/services.d/gitlab-tools-worker/service.sh"],
+      "cwd": "/opt/gitlab-tools",
+      "run_as": {
+        "enable": true,
+        "uid": 900,
+        "gid": 900
+      }
+    },
+    {
+      "name": "uwsgi",
+      "commands": ["/etc/services.d/uwsgi/service.sh"],
+      "cwd": "/opt/gitlab-tools",
+      "run_as": {
+        "enable": true,
+        "uid": 900,
+        "gid": 900
+      }
+    }
+  ]
+]

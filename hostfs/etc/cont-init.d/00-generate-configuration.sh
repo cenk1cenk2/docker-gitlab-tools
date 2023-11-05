@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 source /scripts/logger.sh
 
 log_start "Checking for required variables..."
@@ -8,7 +10,7 @@ REQUIRED_VARIABLES_NAME=("GT_GITLAB_APP_ID" "GT_GITLAB_APP_SECRET" "GT_GITLAB_UR
 source /scripts/variable-initiate.sh
 
 log_start "Generating configuration file..."
-REQUIRED_VARIABLES_NAME=("GT_GITLAB_APP_ID" "GT_GITLAB_APP_SECRET" "GT_GITLAB_URL" "GT_HOST" "GT_PORT" "GT_SERVER_NAME" "GT_DATABASE_URI" "GT_SECRET_KEY" "GT_GITLAB_SSH")
+REQUIRED_VARIABLES_NAME=("GT_GITLAB_APP_ID" "GT_GITLAB_APP_SECRET" "GT_GITLAB_URL" "GT_HOST" "GT_PORT" "GT_SERVER_NAME" "GT_DATABASE_URI" "GT_SECRET_KEY" "GT_GITLAB_SSH" "GT_CELERY_BROKER_URL" "GT_CELERY_TASK_LOCK_BACKEND")
 
 SED_STRING="sed"
 for VAR in ${REQUIRED_VARIABLES_NAME[@]}; do

@@ -21,3 +21,9 @@ services:
       POSTGRES_DB: gitlab-tools
       POSTGRES_USER: gitlab-tools
       POSTGRES_PASSWORD: something
+
+  rmq:
+    image: rabbitmq:3-alpine
+
+  redis:
+    image: redis:alpine

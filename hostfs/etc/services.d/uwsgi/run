@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-source /scripts/logger.sh
-
-log_start "Starting uwsgi..."
-
-fdmove -c 2 1 exec s6-setuidgid service /etc/services.d/uwsgi/service.sh | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}app${RESET}]\",\$0}'"
