@@ -8,10 +8,10 @@
   {{- end }}
 {{- end -}}
 ---
-HOST: 0.0.0.0
-PORT: '80'
-USER: 'service'
+{{- range $key, $value := $ }}
+{{ $key | upper }}: {{ $value | quote }}
+{{- end }}
 {{- range $all }}
 {{- $key := printf "GT_%s" . | upper }}
-{{ . }}: {{ $key | env }}
+{{ . }}: {{ (env $key) | quote }}
 {{- end }}

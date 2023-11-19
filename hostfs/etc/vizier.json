@@ -1,18 +1,23 @@
 [
   {
-    "name": "config",
+    "parallel": false,
     "templates": [
       {
-        "input": "/etc/gitlab-tools/config.tpl",
+        "input": "/etc/gitlab-tools/config.yml.tpl",
         "output": "/etc/gitlab-tools/config.yml",
         "chown": {
+          "user": "service"
+        },
+        "ctx": {
+          "host": "0.0.0.0",
+          "port": 80,
           "user": "service"
         }
       }
     ]
   },
   {
-    "name": "permissions",
+    "parallel": false,
     "permissions": [
       {
         "path": "/home/service",
@@ -41,19 +46,19 @@
   {
     "commands": [
       {
-        "name": "migrations",
-        "command": "/etc/cont-init.d/00-migrate-database.sh"
-      }
-    ]
-  },
-  {
-    "commands": [
-      {
         "name": "nginx",
         "command": "service nginx start"
       }
     ],
     "background": true
+  },
+  {
+    "commands": [
+      {
+        "name": "migrations",
+        "command": "/etc/cont-init.d/00-migrate-database.sh"
+      }
+    ]
   },
   {
     "parallel": true,
@@ -62,28 +67,28 @@
         "name": "celerybeat",
         "cwd": "/opt/gitlab-tools",
         "command": "/etc/services.d/gitlab-tools-bgtask/service.sh",
-        "run_as": {
+        "runAs": {
           "user": "service"
         },
-        "ensure_is_alive": true
+        "ensureIsAlive": true
       },
       {
         "name": "celeryworker",
         "cwd": "/opt/gitlab-tools",
         "command": "/etc/services.d/gitlab-tools-worker/service.sh",
-        "run_as": {
+        "runAs": {
           "user": "service"
         },
-        "ensure_is_alive": true
+        "ensureIsAlive": true
       },
       {
         "name": "uwsgi",
         "cwd": "/opt/gitlab-tools",
         "command": "/etc/services.d/uwsgi/service.sh",
-        "run_as": {
+        "runAs": {
           "user": "service"
         },
-        "ensure_is_alive": true
+        "ensureIsAlive": true
       }
     ]
   }

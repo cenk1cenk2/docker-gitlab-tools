@@ -34,9 +34,9 @@ You can pass the [gitlab-tools](https://github.com/Salamek/gitlab-tools) configu
 | GT_GITLAB_URL | Your URL pointing to your Gitlab instance. |
 | GT_SERVER_NAME | Outward-facing URI of where this application will be hosted. |
 | GT_SECRET_KEY | Secret key for session storage. |
-| GT_DATABASE_URI | Full URL for SQLAlchemy to connect to the database. Should be in the format of: "postgresql://gitlab-tools:something@gitlab-tools-db/gitlab-tools" |
+| GT_SQLALCHEMY_DATABASE_URI | Full URL for SQLAlchemy to connect to the database. Should be in the format of: "postgresql://gitlab-tools:something@gitlab-tools-db/gitlab-tools" |
 | GT_CELERY_BROKER_URL | RabbitMQ connection string. Should be in the format of: "amqp://rmq:5672" |
-| GT_CELERY_TASK_LOCK_BACKEND | Redis connection string. Should be in the format of: "redis://redis/0" |
+| GT_CELERY_TASK_LOCK_BACKEND | Redis connection string. Should be in the format of: "redis://redis:6379/0" |
 
 ### Persistent Storage
 
