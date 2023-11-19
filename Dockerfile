@@ -39,20 +39,6 @@ RUN \
 COPY ./hostfs /
 COPY --from=vizier /usr/bin/vizier /usr/bin/vizier
 
-# Create default configuration folders
-RUN mkdir -p /scripts
-
-# Copy scripts
-ADD https://gist.githubusercontent.com/cenk1cenk2/e03d8610534a9c78f755c1c1ed93a293/raw/logger.sh /scripts/logger.sh
-
-# Move s6 supervisor files inside the container
-RUN  \
-  chmod +x /scripts/*.sh && \
-  chmod +x /etc/cont-init.d/*.sh && \
-  chmod +x /etc/services.d/gitlab-tools-bgtask/* && \
-  chmod +x /etc/services.d/gitlab-tools-worker/* && \
-  chmod +x /etc/services.d/uwsgi/*
-
 RUN useradd -ms /bin/bash -u 900 service
 
 RUN mkdir -p /home/service/.ssh/ && \
@@ -61,4 +47,4 @@ RUN mkdir -p /home/service/.ssh/ && \
 VOLUME [ "/home/service" ]
 EXPOSE 80
 
-ENTRYPOINT [ "tini", "--", "vizier", "--config", "/etc/vizier.json" ]
+ENTRYPOINT [ "tini", "--", "vizier", "--config", "/etc/vizier.yml" ]

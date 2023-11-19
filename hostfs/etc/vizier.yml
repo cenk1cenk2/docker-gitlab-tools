@@ -1,0 +1,86 @@
+---
+$schema: https://raw.githubusercontent.com/cenk1cenk2/docker-vizier/main/schema.json
+steps:
+  - templates:
+      - input: /etc/vizier/gitlab-tools-config.yml.tpl
+        output: /etc/gitlab-tools/config.yml
+        chown:
+          user: service
+        ctx:
+          host: 0.0.0.0
+          port: 80
+          user: service
+  - permissions:
+      - path: /home/service
+        chown:
+          user: service
+        chmod:
+          file: '0640'
+          dir: '2700'
+        recursive: true
+      - path: /home/service/.ssh
+        chown:
+          user: service
+        chmod:
+          file: '0600'
+          dir: '2700'
+        recursive: true
+  - commands:
+      - name: nginx
+        command: service nginx start
+    background: true
+  - commands:
+      - name: migrations
+        command: /usr/bin/env bash
+        cwd: /opt/gitlab-tools
+        script:
+          file: /etc/vizier/gitlab-tools-venv.sh.tpl
+          ctx:
+            commands:
+              - echo "Migrating the database..."
+              - echo "Creating database tables..."
+              - python manage.py create_all --config_prod
+              - echo "Migrating the database..."
+              - python manage.py db upgrade || echo "Stamping the database..."
+              - python manage.py db stamp
+
+  - commands:
+      - parallel: true
+        name: celerybeat
+        cwd: /opt/gitlab-tools
+        command: /usr/bin/env bash
+        script:
+          file: /etc/vizier/gitlab-tools-venv.sh.tpl
+          ctx:
+            commands:
+              - python manage.py celerybeat --config_prod --schedule=/home/service/celery_beat.db --pid=/tmp/celerybeat.pid
+        runAs:
+          user: service
+        health:
+          ensureIsAlive: true
+      - parallel: true
+        name: celeryworker
+        cwd: /opt/gitlab-tools
+        command: /usr/bin/env bash
+        script:
+          file: /etc/vizier/gitlab-tools-venv.sh.tpl
+          ctx:
+            commands:
+              - python manage.py celeryworker --config_prod
+        runAs:
+          user: service
+        health:
+          ensureIsAlive: true
+      - parallel: true
+        name: uwsgi
+        cwd: /opt/gitlab-tools
+        command: /usr/bin/env bash
+        script:
+          file: /etc/vizier/gitlab-tools-venv.sh.tpl
+          ctx:
+            commands:
+              - uwsgi -i "/etc/uwsgi/gitlab-tools.ini" --thunder-lock
+        runAs:
+          user: service
+        health:
+          ensureIsAlive: true
