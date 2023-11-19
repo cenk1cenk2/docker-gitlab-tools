@@ -44,7 +44,6 @@ RUN mkdir -p /scripts
 
 # Copy scripts
 ADD https://gist.githubusercontent.com/cenk1cenk2/e03d8610534a9c78f755c1c1ed93a293/raw/logger.sh /scripts/logger.sh
-ADD https://gist.githubusercontent.com/cenk1cenk2/439be02da4533525e5384f90d1873aac/raw/variable-initiate.sh /scripts/variable-initiate.sh
 
 # Move s6 supervisor files inside the container
 RUN  \
