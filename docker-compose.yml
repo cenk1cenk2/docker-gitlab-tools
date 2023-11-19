@@ -7,11 +7,13 @@ services:
       context: .
     restart: always
     ports:
-      - 80:80
+      - 8080:80
     env_file:
       - ./.env
     depends_on:
       - gitlab-tools-db
+      - rmq
+      - redis
 
   gitlab-tools-db:
     image: postgres:13-alpine
@@ -23,7 +25,7 @@ services:
       POSTGRES_PASSWORD: something
 
   rmq:
-    image: rabbitmq:3-alpine
+    image: rabbitmq:alpine
 
   redis:
     image: redis:alpine
