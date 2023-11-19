@@ -47,4 +47,4 @@ RUN mkdir -p /home/service/.ssh/ && \
 VOLUME [ "/home/service" ]
 EXPOSE 80
 
-ENTRYPOINT [ "tini", "--", "vizier", "--config", "/etc/vizier.yml" ]
+ENTRYPOINT [ "tini", "--", "vizier", "--config-file", "/etc/vizier.yml" ]
