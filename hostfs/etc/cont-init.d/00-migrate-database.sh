@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 source /scripts/logger.sh
 
 log_start "Migrating the database..."

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-source /scripts/logger.sh
-
-log_start "Starting the celeryworker..."
-
-fdmove -c 2 1 exec s6-setuidgid service /etc/services.d/gitlab-tools-worker/service.sh | eval "/usr/bin/mawk -W interactive '{print \"[${GREEN}worker${RESET}]\",\$0}'"

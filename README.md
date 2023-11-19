@@ -6,7 +6,9 @@
 
 This is the containerized version of the [gitlab-tools](https://github.com/Salamek/gitlab-tools). [gitlab-tools](https://github.com/Salamek/gitlab-tools) enables you to synchronize repositories between different `git` servers.
 
-The container itself includes everything that is required to run the [gitlab-tools](https://github.com/Salamek/gitlab-tools) like the RabbitMQ and Redis instances, a UWSGI server to host the flask application, and an Nginx instance to stay in front of it. The only complementary container required to run the application is the database.
+The container itself includes everything that is required to run the [gitlab-tools](https://github.com/Salamek/gitlab-tools) a UWSGI server to host the flask application, and an Nginx instance to stay in front of it.
+
+With the latest revision it does not include RabbitMQ and Redis instances inside the container. **You should use the variables to inject them directly.**
 
 <!-- toc -->
 
@@ -24,15 +26,17 @@ You can run this application as a `docker-compose` stack. The image is hosted as
 
 You can pass the [gitlab-tools](https://github.com/Salamek/gitlab-tools) configuration directly through environment variables without the need to run the CLI itself.
 
-| Variable             | Description                                                                                                                                        |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| LOG_LEVEL            | Sets the log level for the container. Can take values of "silent", "error", "warn", "lifetime", "info", "debug"                                    |
-| GT_GITLAB_APP_ID     | Your application id for your Gitlab instance.                                                                                                      |
-| GT_GITLAB_APP_SECRET | Your application secret for your Gitlab instance.                                                                                                  |
-| GT_GITLAB_URL        | Your URL pointing to your Gitlab instance.                                                                                                         |
-| GT_SERVER_NAME       | Outward-facing URI of where this application will be hosted.                                                                                       |
-| GT_SECRET_KEY        | Secret key for session storage.                                                                                                                    |
-| GT_DATABASE_URI      | Full URL for SQLAlchemy to connect to the database. Should be in the format of: "postgresql://gitlab-tools:something@gitlab-tools-db/gitlab-tools" |
+| Variable | Description |
+| --- | --- |
+| LOG_LEVEL | Sets the log level for the container. Can take values of "fatal", "error", "warn", "info", "debug", "trace" |
+| GT_GITLAB_APP_ID | Your application id for your Gitlab instance. |
+| GT_GITLAB_APP_SECRET | Your application secret for your Gitlab instance. |
+| GT_GITLAB_URL | Your URL pointing to your Gitlab instance. |
+| GT_SERVER_NAME | Outward-facing URI of where this application will be hosted. |
+| GT_SECRET_KEY | Secret key for session storage. |
+| GT_SQLALCHEMY_DATABASE_URI | Full URL for SQLAlchemy to connect to the database. Should be in the format of: "postgresql://gitlab-tools:something@gitlab-tools-db/gitlab-tools" |
+| GT_CELERY_BROKER_URL | RabbitMQ connection string. Should be in the format of: "amqp://rmq:5672" |
+| GT_CELERY_TASK_LOCK_BACKEND | Redis connection string. Should be in the format of: "redis://redis:6379/0" |
 
 ### Persistent Storage
 

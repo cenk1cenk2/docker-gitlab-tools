@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-cd /opt/gitlab-tools
+set -eo pipefail
+
 source venv/bin/activate
 
 python manage.py celeryworker --config_prod

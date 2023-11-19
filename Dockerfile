@@ -1,28 +1,24 @@
+# syntax=docker/dockerfile-upstream:master-labs
+FROM cenk1cenk2/vizier:latest AS vizier
+
 FROM debian:bullseye-slim
 
 ARG VERSION=1.4.6
 ARG REPOSITORY=https://github.com/Salamek/gitlab-tools.git
-ARG S6_VERSION=2.2.0.3
+ARG NODE_VERSION=16
 
 WORKDIR /opt/gitlab-tools
 
 SHELL ["/bin/bash", "-c"]
 
-# Install s6 overlay
-ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-amd64.tar.gz /tmp/
-RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
-  # create directories
-  mkdir -p /etc/services.d && mkdir -p /etc/cont-init.d && mkdir -p /s6-bin && \
-  rm -rf /tmp/*
 
 RUN \
-  # add build time dependencies
   apt-get update && apt-get install -y curl gnupg apt-transport-https git && \
-  curl -fsSL https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc | apt-key add - && \
+  # add build time dependencies
+  curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor | apt-key add - && \
+  echo "deb https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" > /etc/apt/sources.list.d/nodesource.list  && \
   apt-get update && \
-  apt-get install -y python3-virtualenv virtualenv rabbitmq-server redis-server build-essential python3-dev libpq-dev git postgresql-server-dev-all python3-pip libffi-dev nginx uwsgi uwsgi-plugin-python3 && \
-  curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
-  apt-get install -y nodejs && \
+  apt-get install -y tini python3-virtualenv virtualenv build-essential python3-dev libpq-dev git postgresql-server-dev-all python3-pip libffi-dev nginx uwsgi uwsgi-plugin-python3 nodejs && \
   # clone the dependencies
   mkdir -p /opt/gitlab-tools /etc/gitlab-tools /data && \
   git clone ${REPOSITORY} . && \
@@ -41,6 +37,7 @@ RUN \
   pip install --no-cache-dir .
 
 COPY ./hostfs /
+COPY --from=vizier /usr/bin/vizier /usr/bin/vizier
 
 # Create default configuration folders
 RUN mkdir -p /scripts
@@ -65,9 +62,4 @@ RUN mkdir -p /home/service/.ssh/ && \
 VOLUME [ "/home/service" ]
 EXPOSE 80
 
-# s6 behaviour, https://github.com/just-containers/s6-overlay
-ENV S6_KEEP_ENV 1
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS 2
-ENV S6_FIX_ATTRS_HIDDEN 1
-
-ENTRYPOINT [ "/init" ]
+ENTRYPOINT [ "tini", "--", "vizier", "--config", "/etc/vizier.json" ]
