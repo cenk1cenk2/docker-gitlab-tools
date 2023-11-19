@@ -1,95 +1,104 @@
-[
-  {
-    "parallel": false,
-    "templates": [
-      {
-        "input": "/etc/gitlab-tools/config.yml.tpl",
-        "output": "/etc/gitlab-tools/config.yml",
-        "chown": {
-          "user": "service"
-        },
-        "ctx": {
-          "host": "0.0.0.0",
-          "port": 80,
-          "user": "service"
+{
+  "$schema": "https://raw.githubusercontent.com/cenk1cenk2/docker-vizier/main/schema.json",
+  "steps": [
+    {
+      "parallel": false,
+      "templates": [
+        {
+          "input": "/etc/gitlab-tools/config.yml.tpl",
+          "output": "/etc/gitlab-tools/config.yml",
+          "chown": {
+            "user": "service"
+          },
+          "ctx": {
+            "host": "0.0.0.0",
+            "port": 80,
+            "user": "service"
+          }
         }
-      }
-    ]
-  },
-  {
-    "parallel": false,
-    "permissions": [
-      {
-        "path": "/home/service",
-        "chown": {
-          "user": "service"
+      ]
+    },
+    {
+      "parallel": false,
+      "permissions": [
+        {
+          "path": "/home/service",
+          "chown": {
+            "user": "service"
+          },
+          "chmod": {
+            "file": "0640",
+            "dir": "2700"
+          },
+          "recursive": true
         },
-        "chmod": {
-          "file": "0640",
-          "dir": "2700"
+        {
+          "path": "/home/service/.ssh",
+          "chown": {
+            "user": "service"
+          },
+          "chmod": {
+            "file": "0600",
+            "dir": "2700"
+          },
+          "recursive": true
+        }
+      ]
+    },
+    {
+      "commands": [
+        {
+          "name": "nginx",
+          "command": "service nginx start"
+        }
+      ],
+      "background": true
+    },
+    {
+      "commands": [
+        {
+          "name": "migrations",
+          "command": "/etc/cont-init.d/00-migrate-database.sh"
+        }
+      ]
+    },
+    {
+      "parallel": true,
+      "commands": [
+        {
+          "name": "celerybeat",
+          "cwd": "/opt/gitlab-tools",
+          "command": "/etc/services.d/gitlab-tools-bgtask/service.sh",
+          "runAs": {
+            "user": "service"
+          },
+          "health": {
+            "ensureIsAlive": true
+          }
         },
-        "recursive": true
-      },
-      {
-        "path": "/home/service/.ssh",
-        "chown": {
-          "user": "service"
+        {
+          "name": "celeryworker",
+          "cwd": "/opt/gitlab-tools",
+          "command": "/etc/services.d/gitlab-tools-worker/service.sh",
+          "runAs": {
+            "user": "service"
+          },
+          "health": {
+            "ensureIsAlive": true
+          }
         },
-        "chmod": {
-          "file": "0600",
-          "dir": "2700"
-        },
-        "recursive": true
-      }
-    ]
-  },
-  {
-    "commands": [
-      {
-        "name": "nginx",
-        "command": "service nginx start"
-      }
-    ],
-    "background": true
-  },
-  {
-    "commands": [
-      {
-        "name": "migrations",
-        "command": "/etc/cont-init.d/00-migrate-database.sh"
-      }
-    ]
-  },
-  {
-    "parallel": true,
-    "commands": [
-      {
-        "name": "celerybeat",
-        "cwd": "/opt/gitlab-tools",
-        "command": "/etc/services.d/gitlab-tools-bgtask/service.sh",
-        "runAs": {
-          "user": "service"
-        },
-        "ensureIsAlive": true
-      },
-      {
-        "name": "celeryworker",
-        "cwd": "/opt/gitlab-tools",
-        "command": "/etc/services.d/gitlab-tools-worker/service.sh",
-        "runAs": {
-          "user": "service"
-        },
-        "ensureIsAlive": true
-      },
-      {
-        "name": "uwsgi",
-        "cwd": "/opt/gitlab-tools",
-        "command": "/etc/services.d/uwsgi/service.sh",
-        "runAs": {
-          "user": "service"
-        },
-        "ensureIsAlive": true
-      }
-    ]
-  }
-]
+        {
+          "name": "uwsgi",
+          "cwd": "/opt/gitlab-tools",
+          "command": "/etc/services.d/uwsgi/service.sh",
+          "runAs": {
+            "user": "service"
+          },
+          "health": {
+            "ensureIsAlive": true
+          }
+        }
+      ]
+    }
+  ]
+}
