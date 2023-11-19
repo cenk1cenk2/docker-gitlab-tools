@@ -28,7 +28,7 @@ You can pass the [gitlab-tools](https://github.com/Salamek/gitlab-tools) configu
 
 | Variable | Description |
 | --- | --- |
-| LOG_LEVEL | Sets the log level for the container. Can take values of "silent", "error", "warn", "lifetime", "info", "debug" |
+| LOG_LEVEL | Sets the log level for the container. Can take values of "fatal", "error", "warn", "info", "debug", "trace" |
 | GT_GITLAB_APP_ID | Your application id for your Gitlab instance. |
 | GT_GITLAB_APP_SECRET | Your application secret for your Gitlab instance. |
 | GT_GITLAB_URL | Your URL pointing to your Gitlab instance. |
