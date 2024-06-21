@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   gitlab-tools:
     image: cenk1cenk2/gitlab-tools:test
@@ -16,7 +14,7 @@ services:
       - redis
 
   gitlab-tools-db:
-    image: postgres:13-alpine
+    image: postgres:15-alpine
     env_file:
       - ./.env
     environment:
