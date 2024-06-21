@@ -5,7 +5,7 @@ FROM debian:bullseye-slim
 
 ARG VERSION=1.5.2
 ARG REPOSITORY=https://github.com/Salamek/gitlab-tools.git
-ARG NODE_VERSION=18
+ARG NODE_VERSION=20
 
 WORKDIR /opt/gitlab-tools
 
@@ -31,8 +31,6 @@ RUN \
 RUN \
   virtualenv -p python3 venv && \
   source ./venv/bin/activate && \
-  # pip install --no-cache-dir --upgrade wheel setuptools && \
-  pip install --no-cache-dir SQLAlchemy==1.4 && \
   pip install --no-cache-dir .
 
 COPY ./hostfs /
