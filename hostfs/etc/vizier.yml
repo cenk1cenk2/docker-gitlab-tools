@@ -41,8 +41,10 @@ steps:
               - echo "Creating database tables..."
               - python manage.py create_all --config_prod
               - echo "Migrating the database..."
-              - python manage.py db upgrade || echo "Stamping the database..."
+              - python manage.py db current
+              - python manage.py db upgrade || echo "Can not upgrade, stamping the database instead..."
               - python manage.py db stamp
+              - python manage.py db current
 
   - commands:
       - parallel: true
