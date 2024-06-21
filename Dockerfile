@@ -3,8 +3,8 @@ FROM cenk1cenk2/vizier:latest AS vizier
 
 FROM debian:bookworm-slim
 
-ARG VERSION=master
-ARG REPOSITORY=https://github.com/cenk1cenk2/gitlab-tools.git
+ARG VERSION=09b7cfecd91c791f358ee1fe1e71f4c755747a26
+ARG REPOSITORY=https://github.com/Salamek/gitlab-tools.git
 ARG NODE_VERSION=20
 
 WORKDIR /opt/gitlab-tools
