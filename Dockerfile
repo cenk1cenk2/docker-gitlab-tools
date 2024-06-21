@@ -3,14 +3,13 @@ FROM cenk1cenk2/vizier:latest AS vizier
 
 FROM debian:bullseye-slim
 
-ARG VERSION=1.4.6
+ARG VERSION=1.5.2
 ARG REPOSITORY=https://github.com/Salamek/gitlab-tools.git
-ARG NODE_VERSION=16
+ARG NODE_VERSION=18
 
 WORKDIR /opt/gitlab-tools
 
 SHELL ["/bin/bash", "-c"]
-
 
 RUN \
   apt-get update && apt-get install -y curl gnupg apt-transport-https git && \
