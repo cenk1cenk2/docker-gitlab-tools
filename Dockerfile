@@ -30,8 +30,7 @@ RUN \
 
 RUN \
   virtualenv -p python3 venv && \
-  source ./venv/bin/activate && \
-  pip install --no-cache-dir .
+  ./venv/bin/pip install --no-cache-dir .
 
 COPY ./hostfs /
 COPY --from=vizier /usr/bin/vizier /usr/bin/vizier
