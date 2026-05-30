@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile-upstream:master-labs
-FROM cenk1cenk2/vizier:latest AS vizier
+FROM docker.io/cenk1cenk2/vizier:latest AS vizier
 
-FROM debian:bookworm-slim
+FROM docker.io/library/debian:bookworm-slim
 
 ARG VERSION=09b7cfecd91c791f358ee1fe1e71f4c755747a26
 ARG REPOSITORY=https://github.com/Salamek/gitlab-tools.git
