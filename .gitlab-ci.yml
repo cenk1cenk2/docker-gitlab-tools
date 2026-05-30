@@ -1,29 +1,41 @@
+---
 stages:
   - docker
   - post
 
 include:
-  - project: devops/pipes
-    file: /templates/docker-build-dockerhub.gitlab-ci.yml
-
-  - project: devops/pipes
-    file: /templates/update-docker-hub-readme.gitlab-ci.yml
+  - project: devops/pipelines
+    ref: buildah@1.2.2
+    file: /buildah/build.gitlab-ci.yml
+    inputs:
+      tags:
+        - ${GITLAB_CI_ARCH}
+      rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+        - if: $CI_COMMIT_TAG
+  - project: devops/pipelines
+    ref: buildah@1.2.2
+    file: /buildah/registry-dockerhub.gitlab-ci.yml
+  - project: devops/pipelines
+    ref: docker@1.1.0
+    file: /docker/update-docker-hub-readme.gitlab-ci.yml
+    inputs:
+      rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+        - if: $CI_COMMIT_TAG
 
 variables:
-  DOCKER_IMAGE_NAME: cenk1cenk2/gitlab-tools
-  README_DESCRIPTION: |
+  GITLAB_CI_ARCH: amd64
+  CONTAINER_IMAGE_NAME: cenk1cenk2/gitlab-tools
+  CONTAINER_FILE_CONTEXT: .
+  CONTAINER_IMAGE_TAGS: latest
+  README_SHORT_DESCRIPTION: |
     Runs Salamek/gitlab-tools in a container, which enables pull/push mirroring to Gitlab.
-  DOCKERFILE_CONTEXT: .
-  DOCKER_IMAGE_TAGS: latest
 
 docker-build:
-  only:
-    refs:
-      - main
-      - tags
+  stage: docker
+  extends: .container-build
 
 update-docker-hub-readme:
-  only:
-    refs:
-      - main
-      - tags
+  stage: post
+  extends: .update-docker-hub-readme
