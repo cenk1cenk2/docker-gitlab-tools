@@ -28,11 +28,11 @@ RUN \
   # clean up build time dependencies
   apt-get remove -y curl gnupg apt-transport-https nodejs
 
+COPY ./hostfs /
+
 RUN \
   virtualenv -p python3 venv && \
-  ./venv/bin/pip install --no-cache-dir .
-
-COPY ./hostfs /
+  ./venv/bin/pip install --no-cache-dir --constraint /opt/gitlab-tools/container-constraints.txt .
 COPY --from=vizier /usr/bin/vizier /usr/bin/vizier
 
 RUN useradd -ms /bin/bash -u 900 service

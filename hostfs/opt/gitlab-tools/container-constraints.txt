@@ -1,0 +1,3 @@
+# Upstream gitlab-tools pins SQLAlchemy 1.4.x. Newer Flask-Celery-Tools
+# releases import SQLAlchemy 2.x-only APIs such as sqlalchemy.orm.mapped_column.
+Flask-Celery-Tools==1.4.3
