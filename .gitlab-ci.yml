@@ -11,7 +11,7 @@ include:
     ref: buildah@2.0.0
     file: /buildah/registry-dockerhub.gitlab-ci.yml
   - project: devops/pipelines
-    ref: docker@1.1.0
+    ref: docker@2.0.0
     file: /docker/update-docker-hub-readme.gitlab-ci.yml
 
 variables:
