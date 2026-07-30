@@ -68,7 +68,7 @@ steps:
           file: /etc/vizier/gitlab-tools-venv.sh.tpl
           ctx:
             commands:
-              - python manage.py celeryworker --config_prod
+              - python manage.py celeryworker --config_prod --concurrency=1
         runAs:
           user: service
         health:
