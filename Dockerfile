@@ -22,6 +22,7 @@ RUN \
   mkdir -p /opt/gitlab-tools /etc/gitlab-tools /data && \
   git clone ${REPOSITORY} . && \
   git checkout ${VERSION} && \
+  sed -i "s/autoscale='10,1'/concurrency=int(os.environ.get('CELERY_WORKER_CONCURRENCY', '1'))/g" gitlab_tools/bin/gitlab_tools.py && \
   cd /opt/gitlab-tools/gitlab_tools/static && \
   npm ci && \
   cd /opt/gitlab-tools && \
