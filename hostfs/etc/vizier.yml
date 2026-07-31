@@ -26,9 +26,11 @@ steps:
           dir: '2700'
         recursive: true
   - commands:
-      - name: nginx
-        command: service nginx start
-    background: true
+      - parallel: true
+        name: nginx
+        command: nginx -g 'daemon off;'
+        health:
+          ensureIsAlive: true
   - commands:
       - name: migrations
         command: /usr/bin/env bash
