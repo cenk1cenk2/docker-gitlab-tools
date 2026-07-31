@@ -26,12 +26,6 @@ steps:
           dir: '2700'
         recursive: true
   - commands:
-      - parallel: true
-        name: nginx
-        command: nginx -g 'daemon off;'
-        health:
-          ensureIsAlive: true
-  - commands:
       - name: migrations
         command: /usr/bin/env bash
         cwd: /opt/gitlab-tools
@@ -49,6 +43,11 @@ steps:
               - python manage.py db current
 
   - commands:
+      - parallel: true
+        name: nginx
+        command: nginx -g 'daemon off;'
+        health:
+          ensureIsAlive: true
       - parallel: true
         name: celerybeat
         cwd: /opt/gitlab-tools
