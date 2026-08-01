@@ -45,7 +45,9 @@ steps:
   - commands:
       - parallel: true
         name: nginx
-        command: nginx -g 'daemon off;'
+        command: /usr/bin/env bash
+        script:
+          inline: exec nginx -g 'daemon off;'
         health:
           ensureIsAlive: true
       - parallel: true
