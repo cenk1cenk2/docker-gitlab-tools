@@ -20,7 +20,7 @@ With the latest revision it does not include RabbitMQ and Redis instances inside
 
 ## Setup
 
-You can run this application as a `docker-compose` stack. The image is hosted as `cenk1cenk2/gitlab-tools` on DockerHub. Check out the [docker-compose](./docker-compose.yml) file for example configuration.
+You can run this application as a `docker-compose` stack. The image is hosted as `cenk1cenk2/gitlab-tools` on DockerHub. Check out the [compose](./compose.yml) file for example configuration.
 
 ### Environment Variables
 
