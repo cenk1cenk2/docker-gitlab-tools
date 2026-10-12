@@ -1,9 +1,14 @@
 ---
 stages:
   - container
+  - version
+  - publish
   - post
 
 include:
+  - project: devops/pipelines
+    ref: semantic-release@2.3.1
+    file: /semantic-release/publish.gitlab-ci.yml
   - project: devops/pipelines
     ref: buildah@2.0.1
     file: /buildah/build.gitlab-ci.yml
@@ -26,6 +31,23 @@ container-build:
   extends: .container-build
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+version:
+  stage: version
+  extends: .semantic-release
+  needs:
+    - container-build
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+    - when: never
+
+publish:
+  stage: publish
+  variables:
+    CONTAINER_IMAGE_TAGS: $CI_COMMIT_TAG
+  extends: .container-build
+  rules:
     - if: $CI_COMMIT_TAG
 
 update-docker-hub-readme:
