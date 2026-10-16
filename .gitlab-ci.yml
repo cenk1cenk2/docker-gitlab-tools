@@ -20,7 +20,7 @@ include:
     file: /docker/update-docker-hub-readme.gitlab-ci.yml
 
 variables:
-  CONTAINER_IMAGE_NAME: cenk1cenk2/gitlab-tools
+  CONTAINER_IMAGE_NAME: docker.io/cenk1cenk2/gitlab-tools
   CONTAINER_FILE_CONTEXT: .
   CONTAINER_IMAGE_TAGS: latest
   README_SHORT_DESCRIPTION: |
